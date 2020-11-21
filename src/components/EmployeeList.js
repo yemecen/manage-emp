@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState} from 'react';
 import Employee from './Employee';
 import { Button, Modal } from 'react-bootstrap';
 import { EmployeeContext } from '../contexts/EmployeeContext';
@@ -6,75 +6,70 @@ import AddForm from './AddForm';
 
 const EmployeeList = () => {
 
-    const { employees } = useContext(EmployeeContext)
+    const {employees} = useContext(EmployeeContext)
 
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true)
 
-    /*useEffect(() => {
-        handleClose();
-    }, [employees])*/
     useEffect(() => {
-        console.log("COMPONENT RENDERED")
-    })
+        handleClose();
+    }, [employees])
 
-    const myRef = useRef(null)//başlangıç değeri null
-    console.log(myRef.current);
-
-    const onButtonClick = () => {
-        console.log(myRef.current);
-        myRef.curret.focus()
-    }
 
     return (
 
         <>
-            <div className="table-title">
-                <div className="row">
-                    <div className="col-sm-6">
-                        <h2>Manage <b>Employees</b></h2>
-                    </div>
-                    <div className="col-sm-6">
-                        <Button onClick={handleShow} className="btn btn-success text-white" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>Add New Employee</span></Button>
-                    </div>
-                </div>
-            </div>
+        <div className="table-title">
+        <div className="row">
+          <div className="col-sm-6">
+            <h2>Manage <b>Employees</b></h2>
+          </div>
+          <div className="col-sm-6">
+            <Button onClick={handleShow} className="btn btn-success text-white" data-toggle="modal"><i className="material-icons">&#xE147;</i> <span>Add New Employee</span></Button>
+          </div>
+        </div>
+      </div>
 
-            <table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <Employee employees={employees} />
-                </tbody>
-            </table>
+        <table className="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    employees.map((employee) =>(
+                        <tr key={employee.id}>
+                            <Employee employee={employee} />
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header className="modal-header" closeButton>
-                    <Modal.Title>
-                        Add Employee
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header className="modal-header" closeButton>
+                <Modal.Title>
+                    Add Employee
                 </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <AddForm />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close Modal
+            </Modal.Header>
+            <Modal.Body>
+                <AddForm />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close Modal
                 </Button>
-                </Modal.Footer>
-            </Modal>
+            </Modal.Footer>
+        </Modal>
 
-            <input ref={myRef} type="text"></input>
-            <button onClick={onButtonClick}>Focut Input</button>
+        
         </>
     )
 }
