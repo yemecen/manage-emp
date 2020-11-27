@@ -11,7 +11,10 @@ const EmployeeContextProvider = (props) => {
         {id:uuidv4(), name: 'Maria Anders', email: 'mariaanders@mail.com', address: '25, rue Lauriston, Paris, France', phone: '(503) 555-9931'},
         {id:uuidv4(), name: 'Fran Wilson', email: 'franwilson@mail.com', address: 'C/ Araquil, 67, Madrid, Spain', phone: '(204) 619-5731'},
         {id:uuidv4(), name: 'Martin Blank', email: 'martinblank@mail.com', address: 'Via Monte Bianco 34, Turin, Italy', phone: '(480) 631-2097'}
-])
+    ])
+
+    //const sortedEmployees = employees.sort((a,b) => {a.name < b.name ? -1 : 1});
+    const sortedEmployees = employees.sort((a, b) => (a.name < b.name ? -1 : 1));
 
     const addEmployee = (name, email, address, phone) => {
         setEmployees([...employees, {id:uuidv4(), name, email, address, phone}])
@@ -25,7 +28,7 @@ const EmployeeContextProvider = (props) => {
     }
 
     return (
-        <EmployeeContext.Provider value={{employees, addEmployee, deleteEmployee,updateEmployee}}>
+        <EmployeeContext.Provider value={{sortedEmployees, addEmployee, deleteEmployee,updateEmployee}}>
             {props.children}
         </EmployeeContext.Provider>
     )
