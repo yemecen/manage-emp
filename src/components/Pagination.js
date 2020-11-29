@@ -1,6 +1,6 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Pagination = ({pages, setCurrentPage}) => {
+const Pagination = ({ pages, setCurrentPage, currentEmployees, sortedEmployees }) => {
 
     const numOfPages = [];
 
@@ -9,20 +9,20 @@ const Pagination = ({pages, setCurrentPage}) => {
     }
 
     const [currentButton, setCurrentButton] = useState(1);
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         setCurrentPage(currentButton)
-    },[currentButton, setCurrentPage])
-  
+    }, [currentButton, setCurrentPage])
+
     return (
         <div className="clearfix">
-            <div className="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <div className="hint-text">Showing <b>{currentEmployees.length}</b> out of <b>{sortedEmployees.length}</b> entries</div>
             <ul className="pagination">
                 <li className={`${currentButton === 1 ? 'page-item disabled' : 'page-item'}`}><a href="#!" onClick={() => setCurrentButton((prev) => prev === 1 ? prev : prev - 1)}>Previous</a></li>
                 {
-                    numOfPages.map((page,index)=>{
+                    numOfPages.map((page, index) => {
                         return (
-                            <li key={index} className={`${currentButton === page ? 'page-item active' : 'page-item'}`}><a href="#!" className="page-link" onClick={()=>setCurrentButton(page)}>{page}</a></li>
+                            <li key={index} className={`${currentButton === page ? 'page-item active' : 'page-item'}`}><a href="#!" className="page-link" onClick={() => setCurrentButton(page)}>{page}</a></li>
                         )
                     })
                 }
